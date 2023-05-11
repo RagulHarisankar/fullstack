@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>userdashbord</title>
     <link rel="stylesheet" href="./style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
   <body>
-      
     <div class="container">
       <div class="text">Registration</div>
-      <form action="/auth/register" method="post">
+      <form method="post">
         <div class="data">
           <label for="name">Full Name</label>
           <input type="text" name="name" id="name" />
@@ -26,7 +26,7 @@
         </div>
         <div class="data">
           <label for="confirm_password">Confirm Password</label>
-          <input type="password" name="confirm_password" id="password" />
+          <input type="password" name="confirm_password" id="re-password" />
         </div>
 
         <div class="btn">
@@ -37,5 +37,33 @@
         </div>
       </form>
     </div>
+    <script>
+      window.addEventListener('submit', (e) => {
+        e.preventDefault()
+        let name = document.getElementById('name').value
+        let email = document.getElementById('email').value
+        let password = document.getElementById('password').value
+        let re_pass = document.getElementById('re-password').value
+
+        if(password.length >= 8 && password === re_pass){
+          axios.post('http://localhost:3000/register', {
+            name,
+            email,
+            password: window.btoa(password)
+          })
+          .then(function (response) {
+            console.log(response);
+            window.alert('Registerd successfully !')
+          })
+          .catch(function (error) {
+            console.log(error);
+            window.alert('Server error. Please try again !')
+          });
+        }
+        else{
+          console.log('False');
+        }
+      })
+    </script>
   </body>
 </html>
