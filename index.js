@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+let cors = require('cors')
 const app = express();
 
 let Model = require('./model/userSchema')
@@ -16,6 +17,7 @@ database.once('connected', () => {
     console.log('Database Connected');
 })
 
+app.use(cors())
 app.use(express.json());
 
 app.post('/register', async(req, res) => {
